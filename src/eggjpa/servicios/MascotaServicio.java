@@ -6,10 +6,17 @@ import java.util.List;
 
 public class MascotaServicio {
 
-    private MascotaDAO mascotaDAO = new MascotaDAO();
-    
-    public MascotaServicio(){
-        this.mascotaDAO = new MascotaDAO(); 
+    private DireccionServicio direccionServicio;
+    private PersonaServicio personaServicio;
+    private final MascotaDAO DAO;
+
+    public MascotaServicio() {
+        this.DAO = new MascotaDAO();
+    }
+
+    public void setServicios(DireccionServicio direccionServicio, PersonaServicio personaServicio) {
+        this.direccionServicio = direccionServicio;
+        this.personaServicio = personaServicio;
     }
 
     public Mascota crearMascota(String nombre, String dni) {
@@ -17,17 +24,17 @@ public class MascotaServicio {
         try {
             mascota.setNombre(nombre);
             mascota.setDni(dni);
-            mascotaDAO.guardarMascota(mascota);
+            DAO.guardarMascota(mascota);
             return mascota;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
-        } 
+        }
     }
 
     public Mascota buscarPorDni(String dni) {
         try {
-            return mascotaDAO.buscarPorDNI(dni);
+            return DAO.buscarPorDNI(dni);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -36,7 +43,7 @@ public class MascotaServicio {
 
     public boolean eliminarPorDni(String dni) {
         try {
-            mascotaDAO.eliminarMascota(dni);
+            DAO.eliminarMascota(dni);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -46,7 +53,7 @@ public class MascotaServicio {
 
     public List<Mascota> listarMascotas() {
         try {
-            return mascotaDAO.listarTodos();
+            return DAO.listarTodos();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

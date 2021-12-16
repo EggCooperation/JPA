@@ -17,14 +17,14 @@ import java.util.logging.Logger;
 
 public class Menu {
 
-    private MascotaServicio mascotaServicio;
-    private DireccionServicio direccionServicio;
-    private PersonaServicio personaServicio;
+    private final MascotaServicio mascotaServicio = new MascotaServicio();
+    private final DireccionServicio direccionServicio = new DireccionServicio();
+    private final PersonaServicio personaServicio = new PersonaServicio();
 
     public Menu() {
-        mascotaServicio = new MascotaServicio();
-        direccionServicio = new DireccionServicio();
-        personaServicio = new PersonaServicio();
+        mascotaServicio.setServicios(direccionServicio, personaServicio);
+        direccionServicio.setServicios(mascotaServicio, personaServicio);
+        personaServicio.setServicios(direccionServicio, mascotaServicio);
     }
 
     public void ejecucion() {
@@ -54,7 +54,7 @@ public class Menu {
         String dniPersona2 = "377";
         Rol rolAdmin = Rol.ADMIN;
         Date nacimiento = null;
-        
+
         try {
             String inputDate = "07/28/2011 11:06:37 AM";
             nacimiento = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a").parse(inputDate);
@@ -97,7 +97,7 @@ public class Menu {
          */
         System.out.println("Las personas que quedaron en la base de datos son:");
         personaServicio.listarPersonas().forEach((a) -> System.out.println(a.toString()));
-        
+
         System.out.println(personaServicio.buscarPorPaisYProvincia("Chile", "STG"));
     }
 

@@ -10,10 +10,17 @@ import java.util.List;
 
 public class PersonaServicio {
 
-    private PersonaDAO personaDAO;
-    
-    public PersonaServicio(){
-        this.personaDAO = new PersonaDAO(); 
+    private DireccionServicio direccionServicio;
+    private MascotaServicio mascotaServicio;
+    private final PersonaDAO DAO;
+
+    public PersonaServicio() {
+        this.DAO = new PersonaDAO();
+    }
+
+    public void setServicios(DireccionServicio direccionServicio, MascotaServicio mascotaServicio) {
+        this.direccionServicio = direccionServicio;
+        this.mascotaServicio = mascotaServicio;
     }
 
     public Persona crearPersona(String nombre, String apellido, String dni, Date nacimiento, Rol rol, Direccion direccion, List<Mascota> mascotas) {
@@ -28,7 +35,7 @@ public class PersonaServicio {
             persona.setMascotas(mascotas);
             persona.setDireccion(direccion);
 
-            personaDAO.guardarPersona(persona);
+            DAO.guardarPersona(persona);
             return persona;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -38,7 +45,7 @@ public class PersonaServicio {
 
     public Persona buscarPorDni(String dni) {
         try {
-            return personaDAO.buscarPorDNI(dni);
+            return DAO.buscarPorDNI(dni);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -47,7 +54,7 @@ public class PersonaServicio {
 
     public boolean eliminarPorDni(String dni) {
         try {
-            personaDAO.eliminar(dni);
+            DAO.eliminar(dni);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -57,16 +64,16 @@ public class PersonaServicio {
 
     public List<Persona> listarPersonas() {
         try {
-            return personaDAO.listarTodos();
+            return DAO.listarTodos();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
-    
+
     public List<Persona> buscarPorPaisYProvincia(String pais, String provincia) {
         try {
-            return personaDAO.buscarPorPaisYProvincia(pais, provincia);
+            return DAO.buscarPorPaisYProvincia(pais, provincia);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
