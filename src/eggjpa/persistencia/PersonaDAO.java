@@ -2,43 +2,40 @@ package eggjpa.persistencia;
 
 import eggjpa.entidades.Persona;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
-public class PersonaDAO {
+public class PersonaDAO extends DAO<Persona> {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAPU");
-    private final EntityManager em = emf.createEntityManager();
-
-    public void guardarPersona(Persona persona) throws Exception {
-        em.getTransaction().begin();
-        em.persist(persona);
-        em.getTransaction().commit();
+    @Override
+    public void guardar(Persona persona) {
+        super.guardar(persona);
     }
 
     public void eliminar(String dni) {
         Persona persona = buscarPorDNI(dni);
-        em.getTransaction().begin();
-        em.remove(persona);
-        em.getTransaction().commit();
+        super.eliminar(persona);
     }
 
     public List<Persona> listarTodos() {
+        conectar();
         List<Persona> personas = em.createQuery("SELECT p FROM Persona p")
                 .getResultList();
+        desconectar();
         return personas;
     }
 
     public Persona buscarPorDNI(String dni) {
+        conectar();
         Persona persona = (Persona) em.createQuery("SELECT p FROM Persona p WHERE p.dni LIKE :dni")
                 .setParameter("dni", dni).getSingleResult();
+        desconectar();
         return persona;
     }
 
     public Persona buscarPorDNIMascota(String dni) {
+        conectar();
         Persona persona = (Persona) em.createQuery("SELECT p FROM Persona p, IN(p.mascotas) m WHERE m.dni LIKE :dni")
                 .setParameter("dni", dni).getSingleResult();
+        desconectar();
         return persona;
     }
 
@@ -47,12 +44,14 @@ public class PersonaDAO {
      * https://www.baeldung.com/jpa-join-types
      */
     public List<Persona> buscarPorPaisYProvincia(String pais, String provincia) {
+        conectar();
         //Opcion 1 sin JOIN
         //        List<Persona> personas = em.createQuery("SELECT p FROM Persona p WHERE p.direccion.pais LIKE :pais AND p.direccion.provincia LIKE :provincia ")
         //                .setParameter("pais", pais).setParameter("provincia", provincia).getResultList();
         //Opcion 2 con JOIN
         List<Persona> personas = em.createQuery("SELECT p FROM Persona p JOIN p.direccion d WHERE d.pais LIKE :pais AND d.provincia LIKE :provincia ")
                 .setParameter("pais", pais).setParameter("provincia", provincia).getResultList();
+        desconectar();
         return personas;
     }
 }

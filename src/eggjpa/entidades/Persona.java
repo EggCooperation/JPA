@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -27,7 +28,7 @@ public class Persona {
     @Column(unique = true)
     private String dni;
 
-    @OneToMany
+    @OneToMany(fetch=FetchType.EAGER)
     private List<Mascota> mascotas;
 
     @OneToOne

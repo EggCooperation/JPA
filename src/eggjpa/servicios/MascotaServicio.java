@@ -24,7 +24,7 @@ public class MascotaServicio {
         try {
             mascota.setNombre(nombre);
             mascota.setDni(dni);
-            DAO.guardarMascota(mascota);
+            DAO.guardar(mascota);
             return mascota;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -43,7 +43,7 @@ public class MascotaServicio {
 
     public boolean eliminarPorDni(String dni) {
         try {
-            DAO.eliminarMascota(dni);
+            DAO.eliminar(dni);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -5,13 +5,14 @@ import java.util.List;
 
 public class MascotaDAO extends DAO<Mascota> {
 
-    public void guardarMascota(Mascota mascota) throws Exception {
-        guardar(mascota);
+    @Override
+    public void guardar(Mascota mascota) {
+        super.guardar(mascota);
     }
 
-    public void eliminarMascota(String dni) throws Exception {
+    public void eliminar(String dni) throws Exception {
         Mascota mascota = buscarPorDNI(dni);
-        eliminar(mascota);
+        super.eliminar(mascota);
     }
 
     public List<Mascota> listarTodos() throws Exception {

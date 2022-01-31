@@ -35,7 +35,7 @@ public class PersonaServicio {
             persona.setMascotas(mascotas);
             persona.setDireccion(direccion);
 
-            DAO.guardarPersona(persona);
+            DAO.guardar(persona);
             return persona;
         } catch (Exception e) {
             System.out.println(e.getMessage());

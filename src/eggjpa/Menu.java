@@ -97,7 +97,11 @@ public class Menu {
          */
         System.out.println("Las personas que quedaron en la base de datos son:");
         personaServicio.listarPersonas().forEach((a) -> System.out.println(a.toString()));
-
+        
+        /*
+        despues muestro muestro individual y todos
+         */
+        System.out.println("Las personas de Santiago de Chile son:");
         System.out.println(personaServicio.buscarPorPaisYProvincia("Chile", "STG"));
     }
 

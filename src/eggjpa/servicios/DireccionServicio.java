@@ -23,7 +23,7 @@ public class DireccionServicio {
         try {
             direccion.setPais(pais);
             direccion.setProvincia(provincia);
-            DAO.guardarDireccion(direccion);
+            DAO.guardar(direccion);
             return direccion;
         } catch (Exception e) {
             System.out.println(e.getMessage());
